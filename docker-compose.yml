@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  dbms:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./dbms/dbms-data:/var/lib/mysql
+    ports:
+      - "3309:3306"
+  api:
+    depends_on:
+      - dbms
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile
+    restart: on-failure
+    ports:
+      - 3001:3001
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    stdin_open: true
+    tty: true

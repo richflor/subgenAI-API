@@ -1,0 +1,17 @@
+//Contenue à copier coller dans le fichier devcontainer.json 
+
+{
+	"name": "API subgen",
+	"dockerComposeFile": "../docker-compose.yml",
+	// "initializeCommand": "echo 'fix WLS issue'",
+	"service": "api", // Le nom du service à utiliser dans le docker-compose.yml
+	"workspaceFolder": "/usr/src/app",
+	"customizations": {
+	  "settings": {},
+	  "extensions": [],
+	"vscode": {
+		"extensions": []
+	}
+	},
+	"forwardPorts": [3309, 3001]
+  }
