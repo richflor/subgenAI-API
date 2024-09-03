@@ -17,7 +17,7 @@ interface ENV {
     DB_NAME: string | undefined;
     LOGGING: boolean ;
     DB_SCHEMA_SYNC: boolean;
-    // ENV: string | undefined;
+    ENV: string | undefined;
 }
 
 interface Config {
@@ -29,7 +29,7 @@ interface Config {
     DB_NAME: string;
     LOGGING: boolean;
     DB_SCHEMA_SYNC: boolean;
-    // ENV: string;
+    ENV: string;
 }
 
 // Loading process.env as ENV interface
@@ -40,10 +40,11 @@ const getConfig = (): ENV => {
     DB_PORT: process.env.DB_PORT ? Number(process.env.DB_PORT) : undefined,
     DB_HOST: process.env.DB_HOST ? process.env.DB_HOST : undefined,
     DB_USER: process.env.DB_USER ? process.env.DB_USER : undefined,
-    DB_PASSWORD: process.env.DB_PASSWORD ? process.env.DB_PASSWORD : undefined,
+    DB_PASSWORD: process.env.DB_PASSWORD ? process.env.DB_PASSWORD : "",
     DB_NAME: process.env.DB_NAME ? process.env.DB_NAME : undefined,
     DB_SCHEMA_SYNC: process.env.DB_SCHEMA_SYNC === "true" ? true : false,
-    LOGGING: process.env.LOGGING === "true" ? true : false
+    LOGGING: process.env.LOGGING === "true" ? true : false,
+    ENV: process.env.ENV ? process.env.ENV : "dev"
   };
 };
 
@@ -62,8 +63,8 @@ const getSanitzedConfig = (config: ENV): Config => {
   return config as Config;
 };
 
-const config = getConfig();
+const rawConfig = getConfig();
 
-const sanitizedConfig = getSanitzedConfig(config);
+const config = getSanitzedConfig(rawConfig);
 
-export default sanitizedConfig;
+export default config;

@@ -1,7 +1,9 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { myDataSource } from "./app-data-source";
+import { AppDataSource } from "./app-data-source";
+import userRoutes from "./routes/user";
+import errorHandler from "./middleware/error-handler";
 
 dotenv.config();
 
@@ -25,15 +27,19 @@ app.use(express.urlencoded({ extended: true }));
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to my api." });
+  res.json({ message: "Welcome to subgenAI api." });
 });
+
+app.use(userRoutes);
+
+app.use(errorHandler);
 
 // set port, listen for requests
 const PORT = process.env.PORT
 const start = async () => {
   try {
 
-    myDataSource
+    AppDataSource
     .initialize()
     .then(() => {
         console.log("Data Source has been initialized!")
